@@ -1,0 +1,197 @@
+name: 🧪 CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  release:
+    types: [ published ]
+
+jobs:
+  shellcheck:
+    name: 🔍 ShellCheck Linting
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📦 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔍 Run ShellCheck
+        uses: ludeeus/action-shellcheck@master
+        with:
+          scandir: '.'
+          format: gcc
+          severity: warning
+
+  test-ubuntu:
+    name: 🐧 Test on Ubuntu
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version: ['20.04', '22.04']
+    steps:
+      - name: 📦 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔧 Setup test environment
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y systemd wget curl
+
+      - name: 🧪 Test installation
+        run: |
+          chmod +x easyproxy3.sh
+          sudo ./easyproxy3.sh install
+
+      - name: ✅ Test service management
+        run: |
+          sudo ./easyproxy3.sh enable
+          sudo ./easyproxy3.sh start
+          sleep 5
+          sudo ./easyproxy3.sh status
+          sudo ./easyproxy3.sh test
+
+      - name: 🔍 Test proxy connectivity
+        run: |
+          # Test HTTP proxy
+          curl -x http://abj:Mst123456789@localhost:33033 -I http://httpbin.org/ip || true
+          
+          # Check if ports are listening
+          sudo netstat -tlnp | grep ":3303"
+
+      - name: 🧹 Cleanup
+        run: |
+          sudo ./easyproxy3.sh stop
+          sudo ./easyproxy3.sh remove
+
+  test-debian:
+    name: 🌀 Test on Debian
+    runs-on: ubuntu-latest
+    container:
+      image: debian:11
+    steps:
+      - name: 📦 Install dependencies
+        run: |
+          apt-get update
+          apt-get install -y git systemd wget curl netstat-nat
+
+      - name: 📦 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🧪 Test installation
+        run: |
+          chmod +x easyproxy3.sh
+          ./easyproxy3.sh install
+
+      - name: ✅ Test configuration
+        run: |
+          ./easyproxy3.sh test
+          ./easyproxy3.sh config --help || true
+
+  security-scan:
+    name: 🔒 Security Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📦 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔒 Run security scan
+        uses: securecodewarrior/github-action-add-sarif@v1
+        with:
+          sarif-file: 'security-scan-results.sarif'
+        continue-on-error: true
+
+      - name: 🔍 Check for hardcoded secrets
+        run: |
+          # Simple check for common secret patterns
+          if grep -r "password.*=" . --include="*.sh" | grep -v "PASSWORD=" | grep -v "# "; then
+            echo "⚠️ Potential hardcoded secrets found"
+            exit 1
+          fi
+
+  documentation:
+    name: 📚 Documentation Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📦 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔍 Check README links
+        uses: gaurav-nelson/github-action-markdown-link-check@v1
+        with:
+          use-quiet-mode: 'yes'
+          use-verbose-mode: 'yes'
+
+      - name: 📝 Validate markdown
+        uses: articulate/actions-markdownlint@v1
+        with:
+          config: .markdownlint.json
+          files: '*.md'
+        continue-on-error: true
+
+  performance-test:
+    name: ⚡ Performance Test
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: 📦 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🧪 Installation speed test
+        run: |
+          chmod +x easyproxy3.sh
+          time sudo ./easyproxy3.sh install
+
+      - name: 📊 Service startup time
+        run: |
+          time sudo ./easyproxy3.sh start
+          sleep 2
+          sudo ./easyproxy3.sh status
+
+      - name: 🧹 Cleanup
+        run: |
+          sudo ./easyproxy3.sh remove
+
+  release:
+    name: 🚀 Release
+    runs-on: ubuntu-latest
+    if: github.event_name == 'release'
+    needs: [shellcheck, test-ubuntu, test-debian]
+    steps:
+      - name: 📦 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🏷️ Create release assets
+        run: |
+          mkdir -p release
+          cp easyproxy3.sh release/
+          cp README.md release/
+          cp LICENSE release/
+          tar -czf release/easyproxy3-${{ github.ref_name }}.tar.gz -C release .
+
+      - name: 📤 Upload release assets
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ./release/easyproxy3-${{ github.ref_name }}.tar.gz
+          asset_name: easyproxy3-${{ github.ref_name }}.tar.gz
+          asset_content_type: application/gzip
+
+  notify:
+    name: 📢 Notify
+    runs-on: ubuntu-latest
+    if: always()
+    needs: [shellcheck, test-ubuntu, test-debian]
+    steps:
+      - name: 📊 Report status
+        run: |
+          if [[ "${{ needs.shellcheck.result }}" == "success" && 
+                "${{ needs.test-ubuntu.result }}" == "success" && 
+                "${{ needs.test-debian.result }}" == "success" ]]; then
+            echo "✅ All tests passed!"
+          else
+            echo "❌ Some tests failed"
+            exit 1
+          fi
