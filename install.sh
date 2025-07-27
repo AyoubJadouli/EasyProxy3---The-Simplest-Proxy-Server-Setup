@@ -141,8 +141,8 @@ show_completion() {
     echo -e "${CYAN}📋 Your proxy server is now running:${NC}"
     echo -e "${GREEN}   • HTTP Proxy:   localhost:33033${NC}"
     echo -e "${GREEN}   • SOCKS5 Proxy: localhost:33034${NC}"
-    echo -e "${GREEN}   • Username:     abj${NC}"
-    echo -e "${GREEN}   • Password:     Mst123456${NC}"
+    echo -e "${GREEN}   • Username:     proxyuser${NC}"
+    echo -e "${GREEN}   • Password:     ChangeMe123!${NC}"
     echo ""
     echo -e "${CYAN}🔧 Management commands:${NC}"
     echo -e "${YELLOW}   ${SCRIPT_NAME} status    ${NC}# Check service status"
@@ -155,7 +155,7 @@ show_completion() {
     echo -e "${YELLOW}   https://github.com/YOUR_USERNAME/easyproxy3${NC}"
     echo ""
     echo -e "${BLUE}🧪 Test your proxy:${NC}"
-    echo -e "${YELLOW}   curl -x http://abj:Mst123456@localhost:33033 http://httpbin.org/ip${NC}"
+    echo -e "${YELLOW}   curl -x http://proxyuser:ChangeMe123!@localhost:33033 http://httpbin.org/ip${NC}"
     echo ""
 }
 
