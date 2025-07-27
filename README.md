@@ -21,10 +21,10 @@
 
 ```bash
 # Download and run - that's it!
-wget -O easyproxy3.sh https://raw.githubusercontent.com/YOUR_USERNAME/easyproxy3/main/easyproxy3.sh
+wget -O easyproxy3.sh https://raw.githubusercontent.com/AyoubJadouli//EasyProxy3---The-Simplest-Proxy-Server-Setup/main//EasyProxy3---The-Simplest-Proxy-Server-Setup.sh
 chmod +x easyproxy3.sh
-sudo ./easyproxy3.sh install
-sudo ./easyproxy3.sh start
+sudo .//EasyProxy3---The-Simplest-Proxy-Server-Setup.sh install
+sudo .//EasyProxy3---The-Simplest-Proxy-Server-Setup.sh start
 ```
 
 **🎉 Your proxy is now running!**
@@ -37,10 +37,10 @@ sudo ./easyproxy3.sh start
 
 ### 🔧 **Easy Management**
 ```bash
-./easyproxy3.sh status    # Check service status
-./easyproxy3.sh logs      # View logs
-./easyproxy3.sh restart   # Restart service
-./easyproxy3.sh config    # Edit configuration
+.//EasyProxy3---The-Simplest-Proxy-Server-Setup.sh status    # Check service status
+.//EasyProxy3---The-Simplest-Proxy-Server-Setup.sh logs      # View logs
+.//EasyProxy3---The-Simplest-Proxy-Server-Setup.sh restart   # Restart service
+.//EasyProxy3---The-Simplest-Proxy-Server-Setup.sh config    # Edit configuration
 ```
 
 ### 🛡️ **Production Ready**
@@ -61,26 +61,26 @@ sudo ./easyproxy3.sh start
 
 ### Installation Commands
 ```bash
-./easyproxy3.sh install   # 📦 Install service (one-time)
-./easyproxy3.sh remove    # 🗑️ Completely remove service
+.//EasyProxy3---The-Simplest-Proxy-Server-Setup.sh install   # 📦 Install service (one-time)
+.//EasyProxy3---The-Simplest-Proxy-Server-Setup.sh remove    # 🗑️ Completely remove service
 ```
 
 ### Service Management
 ```bash
-./easyproxy3.sh start     # ▶️  Start proxy service
-./easyproxy3.sh stop      # ⏹️  Stop proxy service  
-./easyproxy3.sh restart   # 🔄 Restart proxy service
-./easyproxy3.sh status    # 📊 Show detailed status
-./easyproxy3.sh enable    # ✅ Enable auto-start on boot
-./easyproxy3.sh disable   # ❌ Disable auto-start
+.//EasyProxy3---The-Simplest-Proxy-Server-Setup.sh start     # ▶️  Start proxy service
+.//EasyProxy3---The-Simplest-Proxy-Server-Setup.sh stop      # ⏹️  Stop proxy service  
+.//EasyProxy3---The-Simplest-Proxy-Server-Setup.sh restart   # 🔄 Restart proxy service
+.//EasyProxy3---The-Simplest-Proxy-Server-Setup.sh status    # 📊 Show detailed status
+.//EasyProxy3---The-Simplest-Proxy-Server-Setup.sh enable    # ✅ Enable auto-start on boot
+.//EasyProxy3---The-Simplest-Proxy-Server-Setup.sh disable   # ❌ Disable auto-start
 ```
 
 ### Monitoring & Configuration
 ```bash
-./easyproxy3.sh logs      # 📋 Show recent logs
-./easyproxy3.sh follow    # 📈 Follow logs in real-time
-./easyproxy3.sh config    # ⚙️ Edit configuration file
-./easyproxy3.sh test      # 🧪 Test configuration syntax
+.//EasyProxy3---The-Simplest-Proxy-Server-Setup.sh logs      # 📋 Show recent logs
+.//EasyProxy3---The-Simplest-Proxy-Server-Setup.sh follow    # 📈 Follow logs in real-time
+.//EasyProxy3---The-Simplest-Proxy-Server-Setup.sh config    # ⚙️ Edit configuration file
+.//EasyProxy3---The-Simplest-Proxy-Server-Setup.sh test      # 🧪 Test configuration syntax
 ```
 
 ## 🔧 Configuration
@@ -88,7 +88,7 @@ sudo ./easyproxy3.sh start
 The default configuration is production-ready, but you can customize it:
 
 ```bash
-sudo ./easyproxy3.sh config
+sudo .//EasyProxy3---The-Simplest-Proxy-Server-Setup.sh config
 ```
 
 **Key configuration options:**
@@ -160,13 +160,13 @@ deny *
 ### Service Won't Start
 ```bash
 # Check service status
-sudo ./easyproxy3.sh status
+sudo .//EasyProxy3---The-Simplest-Proxy-Server-Setup.sh status
 
 # View detailed logs
-sudo ./easyproxy3.sh logs
+sudo .//EasyProxy3---The-Simplest-Proxy-Server-Setup.sh logs
 
 # Test configuration
-sudo ./easyproxy3.sh test
+sudo .//EasyProxy3---The-Simplest-Proxy-Server-Setup.sh test
 ```
 
 ### Common Issues
@@ -184,14 +184,14 @@ sudo lsof -i :33033
 chmod +x easyproxy3.sh
 
 # Run with sudo for system operations
-sudo ./easyproxy3.sh start
+sudo .//EasyProxy3---The-Simplest-Proxy-Server-Setup.sh start
 ```
 
 **Service Not Found:**
 ```bash
 # Reinstall the service
-sudo ./easyproxy3.sh remove
-sudo ./easyproxy3.sh install
+sudo .//EasyProxy3---The-Simplest-Proxy-Server-Setup.sh remove
+sudo .//EasyProxy3---The-Simplest-Proxy-Server-Setup.sh install
 ```
 
 ## 🔒 Security Considerations
@@ -238,7 +238,7 @@ maxconn 500
 timeouts 30 60 30 10 3 60 180 1800 15 60
 
 # Monitor resource usage
-sudo ./easyproxy3.sh status
+sudo .//EasyProxy3---The-Simplest-Proxy-Server-Setup.sh status
 htop
 ```
 
@@ -270,8 +270,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Support
 
-- **🐛 Issues:** [GitHub Issues](https://github.com/YOUR_USERNAME/easyproxy3/issues)
-- **💬 Discussions:** [GitHub Discussions](https://github.com/YOUR_USERNAME/easyproxy3/discussions)
+- **🐛 Issues:** [GitHub Issues](https://github.com/AyoubJadouli//EasyProxy3---The-Simplest-Proxy-Server-Setup/issues)
+- **💬 Discussions:** [GitHub Discussions](https://github.com/AyoubJadouli//EasyProxy3---The-Simplest-Proxy-Server-Setup/discussions)
 - **📧 Email:** [your-email@domain.com](mailto:your-email@domain.com)
 
 ---
@@ -280,7 +280,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **⭐ If this project helped you, please give it a star! ⭐**
 
-[![GitHub stars](https://img.shields.io/github/stars/YOUR_USERNAME/easyproxy3.svg?style=social&label=Star)](https://github.com/YOUR_USERNAME/easyproxy3/stargazers)
+[![GitHub stars](https://img.shields.io/github/stars/AyoubJadouli//EasyProxy3---The-Simplest-Proxy-Server-Setup.svg?style=social&label=Star)](https://github.com/AyoubJadouli//EasyProxy3---The-Simplest-Proxy-Server-Setup/stargazers)
 
 *Made with ❤️ for the DevOps community*
 
